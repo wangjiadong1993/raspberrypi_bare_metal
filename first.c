@@ -52,7 +52,7 @@
 
 /** GPIO Register set */
 volatile unsigned int* gpio;
-
+volatile unsigned int tim;
 /** Main function - we'll never return from here */
 int main(void)
 {
