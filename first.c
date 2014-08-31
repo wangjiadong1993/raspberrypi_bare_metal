@@ -67,9 +67,20 @@ int main(void)
 	 *        the output level of GPIO16 as 0 (logic low) */
 	gpio[GPIO_GPCLR0] = (1 << 16);
 
+
 	/* Never exit as there is no OS to exit to! */
 	while(1)
 	{
+		for(tim = 0; tim < 500000; tim++)
+			;
 
+		/* Set the GPIO16 output low ( Turn OK LED on )*/
+		gpio[GPIO_GPCLR0] = (1 << 16);
+
+		for(tim = 0; tim < 500000; tim++)
+			;
+
+		/* Set the GPIO16 output high ( Turn OK LED off )*/
+		gpio[GPIO_GPSET0] = (1 << 16);
 	}
 }
