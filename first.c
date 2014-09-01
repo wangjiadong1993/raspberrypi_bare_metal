@@ -13,7 +13,7 @@
 volatile unsigned int* gpio;
 volatile unsigned int tim;
 /** Main function - we'll never return from here */
-int main(void)
+int kernal_main(unsigned int r0, unsigned int r1, unsigned int stags)
 {
 	/* Assign the address of the GPIO peripheral (Using ARM Physical Address) */
 	gpio = (unsigned int*)GPIO_BASE;
