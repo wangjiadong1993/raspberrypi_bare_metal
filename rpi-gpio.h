@@ -221,15 +221,88 @@
                                 1 = Low on GPIO pin n sets corresponding bit in GPEDS
 */                            
 #define GPIO_GPLEN1     29
-
+/*
+        The asynchronous rising edge detect enable registers define the pins for which a
+        asynchronous rising edge transition sets a bit in the event detect status registers
+        (GPEDSn).
+        Asynchronous means the incoming signal is not sampled by the system clock. As such
+        rising edges of very short duration can be detected. 
+*/
+/*
+        31-0 ARENn (n=0..31)    0 = Asynchronous rising edge detect disabled on GPIO pin n.
+                                1 = Asynchronous rising edge on GPIO pin n sets corresponding bit in EDSn. 
+*/        
 #define GPIO_GPAREN0    31
+/*
+        31-22   -                   Reserved R 0
+        21-0    ARENn(n=32..53)     0 = Asynchronous rising edge detect disabled on GPIO pin n.
+                                    1 = Asynchronous rising edge on GPIO pin n sets corresponding bit in EDSn. 
+*/                                
 #define GPIO_GPAREN1    32
-
+/*
+        The asynchronous falling edge detect enable registers define the pins for which a
+        asynchronous falling edge transition sets a bit in the event detect status registers
+        (GPEDSn). Asynchronous means the incoming signal is not sampled by the system
+        clock. As such falling edges of very short duration can be detected. 
+*/
+/*
+        31-0 ARENn (n=0..31)    0 = Asynchronous failing edge detect disabled on GPIO pin n.
+                                1 = Asynchronous failing edge on GPIO pin n sets corresponding bit in EDSn. 
+*/ 
 #define GPIO_GPAFEN0    34
+/*
+        31-22   -                   Reserved R 0
+        21-0    ARENn(n=32..53)     0 = Asynchronous failing edge detect disabled on GPIO pin n.
+                                    1 = Asynchronous failing edge on GPIO pin n sets corresponding bit in EDSn.       
+*/                                
 #define GPIO_GPAFEN1    35
-
+/*
+        The GPIO Pull-up/down Register controls the actuation of the internal pull-up/down
+        control line to ALL the GPIO pins. This register must be used in conjunction with the 2
+        GPPUDCLKn registers.
+        Note that it is not possible to read back the current Pull-up/down settings and so it is the
+        users’ responsibility to ‘remember’ which pull-up/downs are active. The reason for this is
+        that GPIO pull-ups are maintained even in power-down mode when the core is off, when
+        all register contents is lost.
+        The Alternate function table also has the pull state which is applied after a power down. 
+*/
+/*
+        31-2 --- Unused
+        1-0 PUD PUD - GPIO Pin Pull-up/down
+        00 = off – disable pull-up/down
+        01 = Enable Pull Down control
+        10 = Enable Pull Up control
+        11 = Reserved
+        *Use in conjunction with GPPUDCLK0/1/2 
+*/        
 #define GPIO_GPPUD      37
+/*
+        The GPIO Pull-up/down Clock Registers control the actuation of internal pull-downs on
+        the respective GPIO pins. These registers must be used in conjunction with the GPPUD
+        register to effect GPIO Pull-up/down changes. The following sequence of events is
+        required:
+        1. Write to GPPUD to set the required control signal (i.e. Pull-up or Pull-Down or neither
+        to remove the current Pull-up/down)
+        2. Wait 150 cycles – this provides the required set-up time for the control signal
+        3. Write to GPPUDCLK0/1 to clock the control signal into the GPIO pads you wish to
+        modify – NOTE only the pads which receive a clock will be modified, all others will
+        retain their previous state.
+        4. Wait 150 cycles – this provides the required hold time for the control signal
+        5. Write to GPPUD to remove the control signal
+        6. Write to GPPUDCLK0/1 to remove the clock
+*/
+/*
+(31-0) PUDCLKn(n=0..31)     0 = No Effect
+                            1 = Assert Clock on line (n)
+                            *Must be used in conjunction with GPPUD 
+*/        
 #define GPIO_GPPUDCLK0  38
+/*
+31-22   -                   Reserved R 0
+21-0    PUDCLKn (n=32..53)  0 = No Effect
+                            1 = Assert Clock on line (n)
+                            *Must be used in conjunction with GPPUD 
+*/                            
 #define GPIO_GPPUDCLK1  39
 
 #endif
