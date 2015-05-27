@@ -33,14 +33,49 @@
 
 /** The base address of the GPIO peripheral (ARM Physical Address) */
 #define GPIO_BASE       0x20200000UL
+/*
+        The function select registers are used to define the operation of the general-purpose I/O
+        pins. Each of the 54 GPIO pins has at least two alternative functions as defined in section
+        16.2. The FSEL{n} field determines the functionality of the nth GPIO pin. All unused
+        alternative function lines are tied to ground and will output a “0” if selected. All pins reset
+        to normal GPIO input operation.
+*/
 
+/*
+    31-30 --- Reserved 
+    29-27 FSEL9 FSEL9 - Function Select 9
+                        000 = GPIO Pin 9 is an input
+                        001 = GPIO Pin 9 is an output
+                        100 = GPIO Pin 9 takes alternate function 0
+                        101 = GPIO Pin 9 takes alternate function 1
+                        110 = GPIO Pin 9 takes alternate function 2
+                        111 = GPIO Pin 9 takes alternate function 3
+                        011 = GPIO Pin 9 takes alternate function 4
+                        010 = GPIO Pin 9 takes alternate function 5 
+    26-24 FSEL8 FSEL8 - Function Select 
+    23-21 FSEL7 FSEL7 - Function Select 7
+    20-18 FSEL6 FSEL6 - Function Select 6
+    17-15 FSEL5 FSEL5 - Function Select 5
+    14-12 FSEL4 FSEL4 - Function Select 4
+    11-9  FSEL3 FSEL3 - Function Select 3
+    8-6   FSEL2 FSEL2 - Function Select 2
+    5-3   FSEL1 FSEL1 - Function Select 1
+    2-0   FSEL0 FSEL0 - Function Select 0
+*/
 #define GPIO_GPFSEL0    0
 #define GPIO_GPFSEL1    1
 #define GPIO_GPFSEL2    2
 #define GPIO_GPFSEL3    3
 #define GPIO_GPFSEL4    4
 #define GPIO_GPFSEL5    5
-
+/*
+        The output set registers are used to set a GPIO pin. The SET{n} field defines the
+        respective GPIO pin to set, writing a “0” to the field has no effect. If the GPIO pin is
+        being used as in input (by default) then the value in the SET{n} field is ignored.
+        However, if the pin is subsequently defined as an output then the bit will be set
+        according to the last set/clear operation. Separating the set and clear functions
+        removes the need for read-modify-write operations 
+*/
 #define GPIO_GPSET0     7
 #define GPIO_GPSET1     8
 
