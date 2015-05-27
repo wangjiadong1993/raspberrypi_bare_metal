@@ -76,28 +76,150 @@
         according to the last set/clear operation. Separating the set and clear functions
         removes the need for read-modify-write operations 
 */
+/*
+        31-0    SETn (n=0..31)  0 = No effect
+                                1 = Set GPIO pin n
+*/
 #define GPIO_GPSET0     7
+/*
+        31-22   Reserved 
+        21-0    SETn(n=32..53)  0 = No effect
+                                1 = Set GPIO pin n.
+*/
 #define GPIO_GPSET1     8
 
+/*
+        The output clear registers) are used to clear a GPIO pin. The CLR{n} field defines
+        the respective GPIO pin to clear, writing a “0” to the field has no effect. If the GPIO
+        pin is being used as in input (by default) then the value in the CLR{n} field is
+        ignored. However, if the pin is subsequently defined as an output then the bit will
+        be set according to the last set/clear operation. Separating the set and clear
+        functions removes the need for read-modify-write operations. 
+*/
+
+/*
+        31-3    Clearn (n=0..31)    0 = No effect
+                                    1 = Clear GPIO pin n
+*/
 #define GPIO_GPCLR0     10
+/*
+        31-22   Reserved 
+        21-0    Clearn(n=32..53)    0 = No effect
+                                    1 = Clear GPIO pin n.
+*/
 #define GPIO_GPCLR1     11
 
+/*
+        The pin level registers return the actual value of the pin. The LEV{n} field gives the
+        value of the respective GPIO pin. 
+*/
+/*
+        31-0 LEVn (n=0..31)     0 = GPIO pin n is low
+                                1 = GPIO pin n is high 
+*/        
 #define GPIO_GPLEV0     13
+/*
+        31-22 - Reserved 
+        21-0 LEVn (n=32..53)    0 = GPIO pin n is low
+                                1 = GPIO pin n is high 
+*/                            
 #define GPIO_GPLEV1     14
-
+/*
+        The event detect status registers are used to record level and edge events on the
+        GPIO pins. The relevant bit in the event detect status registers is set whenever: 1)
+        an edge is detected that matches the type of edge programmed in the rising/falling
+        edge detect enable registers, or 2) a level is detected that matches the type of level
+        programmed in the high/low level detect enable registers. The bit is cleared by
+        writing a “1” to the relevant bit.
+        The interrupt controller can be programmed to interrupt the processor when any of
+        the status bits are set. The GPIO peripheral has three dedicated interrupt lines.
+        Each GPIO bank can generate an independent interrupt. The third line generates a
+        single interrupt whenever any bit is set. 
+*/
+/*
+        31-0 EDSn (n=0..31)     0 = Event not detected on GPIO pin n
+                                1 = Event detected on GPIO pin n 
+*/
 #define GPIO_GPEDS0     16
+/*
+        31-22 - Reserved R 0
+        21-0    EDSn(n=32..53)  0 = Event not detected on GPIO pin n
+                                1 = Event detected on GPIO pin n 
+*/
 #define GPIO_GPEDS1     17
 
+/*
+        S The rising edge detect enable registers define the pins for which a rising edge
+        transition sets a bit in the event detect status registers (GPEDSn). When the
+        relevant bits are set in both the GPRENn and GPFENn registers, any transition (1
+        to 0 and 0 to 1) will set a bit in the GPEDSn registers. The GPRENn registers use
+        synchronous edge detection. This means the input signal is sampled using the
+        system clock and then it is looking for a “011” pattern on the sampled signal. This
+        has the effect of suppressing glitches. 
+*/
+/*
+    31-0 RENn (n=0..31) 0 = Rising edge detect disabled on GPIO pin n.
+                        1 = Rising edge on GPIO pin n sets corresponding bit in EDSn. 
+*/        
 #define GPIO_GPREN0     19
+/*
+    31-22 - Reserved R 0
+    21-0 RENn(n=32..53) 0 = Rising edge detect disabled on GPIO pin n.
+                        1 = Rising edge on GPIO pin n sets corresponding bit in EDSn. 
+*/
 #define GPIO_GPREN1     20
-
+/*
+        The falling edge detect enable registers define the pins for which a falling edge
+        transition sets a bit in the event detect status registers (GPEDSn). When the relevant
+        bits are set in both the GPRENn and GPFENn registers, any transition (1 to 0 and 0
+        to 1) will set a bit in the GPEDSn registers. The GPFENn registers use synchronous
+        edge detection. This means the input signal is sampled using the system clock and
+        then it is looking for a “100” pattern on the sampled signal. This has the effect of
+        suppressing glitches. 
+*/
+/*
+        31-0 FENn (n=0..31) 0 = Falling edge detect disabled on GPIO pin n.
+                            1 = Falling edge on GPIO pin n sets corresponding bit in EDSn. 
+*/
 #define GPIO_GPFEN0     22
+/*  
+        31-22 - Reserved R 0
+        21-0 RENn(n=32..53) 0 = Failing edge detect disabled on GPIO pin n.
+                            1 = Failing edge on GPIO pin n sets corresponding bit in EDSn. 
+*/
 #define GPIO_GPFEN1     23
 
+/*
+        The high level detect enable registers define the pins for which a high level sets a bit in
+        the event detect status register (GPEDSn). If the pin is still high when an attempt is
+        made to clear the status bit in GPEDSn then the status bit will remain set. 
+*/
+/*
+        31-0 HENn (n=0..31) 0 = High detect disabled on GPIO pin n
+                            1 = High on GPIO pin n sets corresponding bit in GPEDS 
+*/
 #define GPIO_GPHEN0     25
+/*
+        31-22   -               Reserved R 0
+        21-0    HENn(n=32..53)  0 = High detect disabled on GPIO pin n
+                                1 = High on GPIO pin n sets corresponding bit in GPEDS 
+*/
 #define GPIO_GPHEN1     26
-
+/*
+        The low level detect enable registers define the pins for which a low level sets a bit in
+        the event detect status register (GPEDSn). If the pin is still low when an attempt is
+        made to clear the status bit in GPEDSn then the status bit will remain set. 
+*/
+/*
+        31-0 LENn (n=0..31) 0 = Low detect disabled on GPIO pin n
+                            1 = Low on GPIO pin n sets corresponding bit in GPEDS 
+*/        
 #define GPIO_GPLEN0     28
+/*
+        31-22   -               Reserved R 0
+        21-0    LENn (n=32..53) 0 = Low detect disabled on GPIO pin n
+                                1 = Low on GPIO pin n sets corresponding bit in GPEDS
+*/                            
 #define GPIO_GPLEN1     29
 
 #define GPIO_GPAREN0    31
