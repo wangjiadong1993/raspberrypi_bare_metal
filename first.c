@@ -8,10 +8,18 @@
 //*/
 
 /** The base address of the GPIO peripheral (ARM Physical Address) */
-
+ 
 /** GPIO Register set */
 volatile unsigned int* gpio;
 volatile unsigned int tim;
+
+#define LED_GPFSEL      GPIO_GPFSEL1
+#define LED_GPFBIT      18
+#define LED_GPSET       GPIO_GPSET0
+#define LED_GPCLR       GPIO_GPCLR0
+#define LED_GPIO_BIT    16
+
+
 /** Main function - we'll never return from here */
 int kernal_main(unsigned int r0, unsigned int r1, unsigned int stags)
 {
@@ -20,11 +28,11 @@ int kernal_main(unsigned int r0, unsigned int r1, unsigned int stags)
 
 	/* Write 1 to the GPIO16 init nibble in the Function Select 1 GPIO
 	 *        peripheral register to enable GPIO16 as an output */
-	gpio[GPIO_GPFSEL1] |= (1 << 18);
+	gpio[LED_GPFSEL] |= (1 << LED_GPFBIT);
 
 	/* Write 1 to the 16th bit in the Clear0 GPIO peripheral register to set
 	 *        the output level of GPIO16 as 0 (logic low) */
-	gpio[GPIO_GPCLR0] = (1 << 16);
+	gpio[LED_GPSET] = (1 << LED_GPIO_BIT);
 
 
 	/* Never exit as there is no OS to exit to! */
@@ -34,12 +42,12 @@ int kernal_main(unsigned int r0, unsigned int r1, unsigned int stags)
 			;
 
 		/* Set the GPIO16 output low ( Turn OK LED on )*/
-		gpio[GPIO_GPCLR0] = (1 << 16);
+		gpio[GPIO_GPCLR0] = (1 << LED_GPIO_BIT);
 
 		for(tim = 0; tim < 500000; tim++)
 			;
 
 		/* Set the GPIO16 output high ( Turn OK LED off )*/
-		gpio[GPIO_GPSET0] = (1 << 16);
+		gpio[GPIO_GPSET0] = (1 << LED_GPIO_BIT);
 	}
 }

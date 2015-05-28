@@ -26,6 +26,10 @@
     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 
+    Modified by Jiadong Wang
+    2015-05-27
+    
+
 */
 
 #ifndef RPI_GPIO_H
