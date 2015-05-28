@@ -1,5 +1,5 @@
-#ifndef GPIO_FUNCTION_H
-#define GPIO_FUNCTION_H
+// #ifndef GPIO_FUNCTION_H
+// #define GPIO_FUNCTION_H
 
 /*						ALT0    	ALT1 		ALT2 		ALT3 			ALT4 		ALT5
 		GPIO0 	High 	SDA0 		SA5 		<reserved>
@@ -90,6 +90,25 @@ BSCSL SDA/MOSI 		BSC slave Data, SPI salve MOSI 		BSC ISP slave
 BSCSL SCL / SCLK 	BSC slave Clock, SPI slave clock 	BSC ISP slave
 BSCSL - / MISO 		BSC <not used>,SPI MISO 			BSC ISP slave
 BSCSL - / CE_N 		BSC <not used>, SPI CSn 			BSC ISP slave 
+
+SPI1_CEx_N 			SPI1 Chip select 0-2 				Auxiliary I/O
+SPI1_MISO 			SPI1 MISO 							Auxiliary I/O
+SPI1_MOSI 			SPI1 MOSI 							Auxiliary I/O
+SPI1_SCLK 			SPI1 Serial clock 					Auxiliary I/O
+TXD0 				UART 1 Transmit Data 				Auxiliary I/O
+RXD0 				UART 1 Receive Data 				Auxiliary I/O
+CTS0 				UART 1 Clear To Send 				Auxiliary I/O
+RTS0 				UART 1 Request To Send 				Auxiliary I/O
+SPI2_CEx_N 			SPI2 Chip select 0-2 				Auxiliary I/O
+SPI2_MISO 			SPI2 MISO 							Auxiliary I/O
+SPI2_MOSI 			SPI2 MOSI 							Auxiliary I/O
+SPI2_SCLK 			SPI2 Serial clock 					Auxiliary I/O
+ARM_TRST 			ARM JTAG reset 						<TBD>
+ARM_RTCK 			ARM JTAG return clock 				<TBD>
+ARM_TDO 			ARM JTAG Data out 					<TBD>
+ARM_TCK 			ARM JTAG Clock 						<TBD>
+ARM_TDI 			ARM JTAG Data in 					<TBD>
+ARM_TMS 			ARM JTAG Mode select 				<TBD> 
 */
 
 #define GPIO_ALT0 	100	

@@ -1,4 +1,9 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
 #include "rpi-gpio.h"
+#include "rpi-constant.h"
+#include "gpio-function.h"
 //@file armc-2.c
 //@brief ARM C Tutorial #2 for Raspberry-Pi
 
@@ -10,6 +15,7 @@
 /** The base address of the GPIO peripheral (ARM Physical Address) */
  
 /** GPIO Register set */
+
 volatile unsigned int* gpio;
 volatile unsigned int tim;
 
@@ -20,7 +26,13 @@ volatile unsigned int tim;
 #define LED_GPIO_BIT    16
 
 
-/** Main function - we'll never return from here */
+
+//system timer
+volatile rpi_system_timer_t* rpi_system_time_pointer  =  (rpi_system_timer_t*)RPI_SYSTEM_TIMER_PHYSICAL_ADRESS_BASE;
+
+
+
+/* Main function - we'll never return from here */
 int kernal_main(unsigned int r0, unsigned int r1, unsigned int stags)
 {
 	/* Assign the address of the GPIO peripheral (Using ARM Physical Address) */
@@ -38,14 +50,16 @@ int kernal_main(unsigned int r0, unsigned int r1, unsigned int stags)
 	/* Never exit as there is no OS to exit to! */
 	while(1)
 	{
-		for(tim = 0; tim < 500000; tim++)
-			;
+		rpi_sleep_micro_sec(500000);
 
 		/* Set the GPIO16 output low ( Turn OK LED on )*/
 		gpio[GPIO_GPCLR0] = (1 << LED_GPIO_BIT);
 
-		for(tim = 0; tim < 500000; tim++)
-			;
+		// for(tim = 0; tim < 500000; tim++)
+		// 	;
+
+
+		rpi_sleep_micro_sec(500000);
 
 		/* Set the GPIO16 output high ( Turn OK LED off )*/
 		gpio[GPIO_GPSET0] = (1 << LED_GPIO_BIT);
